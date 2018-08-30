@@ -85,6 +85,30 @@ export const store = new Vuex.Store({
         console.log(error)
         commit('setLoading', false)
       })
+    },
+    deleteNote ({commit}, payload) {
+      commit('setLoading', true)
+      firebase.database().ref('notes').child(payload.id).remove().then(() => {
+        firebase.database().ref('notes').once('value').then((data) => {
+        const notes = []
+        const obj = data.val()
+        for (let key in obj) {
+          notes.push({
+            id: key,
+            title: obj[key].title,
+            description: obj[key].description
+          })
+        }
+        commit('setLoading', false)
+        commit('setLoadedNotes', notes)
+        }).catch((error) => {
+          console.log(error)
+          commit('setLoading', true)
+        })
+      }).catch((error) => {
+        console.log(error)
+        commit('setLoading', false)
+      })
     }
   },
   getters: {

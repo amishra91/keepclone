@@ -11,7 +11,7 @@
       <v-layout justify-center align-center mb-5>
         <v-flex md6>
           <v-card>
-            <v-form class="add-note" @submit.prevent="onCreateNote">
+            <v-form class="add-note" v-on:submit.prevent="onCreateNote">
               <v-text-field v-model="title" label="Title"></v-text-field>
               <v-textarea box v-model="description" label="Note"></v-textarea>
               <v-card-actions>
@@ -42,7 +42,7 @@
             </v-card-title>
 
             <v-card-actions>
-              <v-btn flat color="red">Delete</v-btn>
+              <delete-note :note="note"></delete-note>
               <v-spacer></v-spacer>
               <edit-note :note="note"></edit-note>
             </v-card-actions>
@@ -82,6 +82,8 @@
           description: this.description
         }
         this.$store.dispatch('createNote', noteData)
+        this.title = ''
+        this.description = ''
       }
     }
   }
