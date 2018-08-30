@@ -13,7 +13,7 @@
           <v-card>
             <v-form class="add-note" @submit.prevent="onCreateNote">
               <v-text-field v-model="title" label="Title"></v-text-field>
-              <v-textarea box v-model="description" label="Description"></v-textarea>
+              <v-textarea box v-model="description" label="Note"></v-textarea>
               <v-card-actions>
                 <v-btn type="submit" :disabled="!formIsValid" :loading="loading" class="add-note-btn primary">Create note
                   <span slot="loader" class="custom-loader">
@@ -26,11 +26,13 @@
         </v-flex>
       </v-layout>
 
-      <v-layout row wrap>
+      <v-layout row wrap v-if="loading">
         <v-flex xs12 class="text-xs-center">
-          <v-progress-circular :size="70" :width="7" color="primary" indeterminate v-if="loading"></v-progress-circular>
+          <v-progress-circular :size="70" :width="7" color="primary" indeterminate></v-progress-circular>
         </v-flex>
-        <v-flex xs12 sm6 md3 v-for="(note) in notes" :key="note.id" class="notes-card" v-if="!loading">
+      </v-layout>
+        <v-layout row wrap v-else>
+        <v-flex xs12 sm6 md3 v-for="(note) in notes" :key="note.id" class="notes-card">
           <v-card>
             <v-card-title primary-title>
               <div>
@@ -41,7 +43,8 @@
 
             <v-card-actions>
               <v-btn flat color="red">Delete</v-btn>
-              <v-btn flat color="green" :to="'/note/' + note.id">Edit</v-btn>
+              <v-spacer></v-spacer>
+              <edit-note :note="note"></edit-note>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -52,7 +55,7 @@
 
 <script>
   export default {
-    data() {
+    data () {
       return {
         title: '',
         description: ''

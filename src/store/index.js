@@ -16,6 +16,17 @@ export const store = new Vuex.Store({
     createNote (state, payload) {
       state.loadedNotes.push(payload)
     },
+    updateNote (state, payload) {
+      const note = state.loadedNotes.find(note => {
+        return note.id === payload.id
+      })
+      if(payload.title) {
+        note.title = payload.title
+      }
+      if(payload.description) {
+        note.description = payload.description
+      }
+    },
     setLoading (state, payload) {
       state.loading = payload
     }
@@ -53,6 +64,23 @@ export const store = new Vuex.Store({
           ...note,
           id: key
         })
+      }).catch((error) => {
+        console.log(error)
+        commit('setLoading', false)
+      })
+    },
+    updateNoteData ({commit}, payload) {
+      commit('setLoading', true)
+      const updateObj = {}
+      if (payload.title) {
+        updateObj.title = payload.title
+      }
+      if (payload.description) {
+        updateObj.description = payload.description
+      }
+      firebase.database().ref('notes').child(payload.id).update(updateObj).then(() => {
+        commit('setLoading', false)
+        commit('updateNote', payload)
       }).catch((error) => {
         console.log(error)
         commit('setLoading', false)

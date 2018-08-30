@@ -7,10 +7,13 @@ import router from './router'
 import Vuetify from 'vuetify'
 import { store } from './store'
 import 'vuetify/dist/vuetify.min.css'
+import EditNoteModal from './components/editNoteModal.vue'
 
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false
+
+Vue.component('edit-note', EditNoteModal)
 
 /* eslint-disable */
 new Vue({
