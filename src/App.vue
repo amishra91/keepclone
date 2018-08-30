@@ -17,7 +17,7 @@
 
     <v-toolbar color="amber" app absolute clipped-left>
       <v-toolbar-side-icon v-on:click="drawer = !drawer"></v-toolbar-side-icon>
-      <span class="title ml-3 mr-5">Google&nbsp;<span class="text">Keep</span></span>
+      <span class="title ml-3 mr-5">Keep&nbsp;<span class="text">Clone</span></span>
       <v-spacer></v-spacer>
     </v-toolbar>
 
