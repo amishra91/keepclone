@@ -12,9 +12,14 @@
         <v-flex md6>
           <v-card>
             <v-form class="add-note" v-on:submit.prevent="onCreateNote">
+              <img :src="image" class="resp-img">
               <v-text-field v-model="title" label="Title"></v-text-field>
               <v-textarea box v-model="description" label="Note"></v-textarea>
+              
+              <input type="file" style="display: none;" ref="imageInput" accept="image/*" v-on:change="imagePicked">
               <v-card-actions>
+                <v-btn raised class="primary" v-on:click="addImage">Add Image</v-btn>
+                <v-spacer></v-spacer>
                 <v-btn type="submit" :disabled="!formIsValid" :loading="loading" class="add-note-btn primary">Create note
                   <span slot="loader" class="custom-loader">
                     <v-icon light>cached</v-icon>
@@ -32,12 +37,13 @@
         </v-flex>
       </v-layout>
         <v-layout row wrap v-else>
-        <v-flex xs12 sm6 md3 v-for="(note) in notes" :key="note.id" class="notes-card">
+        <v-flex xs12 sm6 md4 v-for="(note) in notes" :key="note.id" class="notes-card mb-5">
           <v-card>
+            <img :src="note.image" class="resp-img">
             <v-card-title primary-title>
               <div>
-                <h3 class="headline mb-0">{{note.title}}</h3>
-                <p>{{note.description}}</p>
+                <h3 class="mb-0">{{note.title}}</h3>
+                <p class="note-desc">{{note.description}}</p>
               </div>
             </v-card-title>
 
@@ -58,7 +64,8 @@
     data () {
       return {
         title: '',
-        description: ''
+        description: '',
+        image: ''
       }
     },
     computed: {
@@ -79,11 +86,30 @@
         }
         const noteData = {
           title: this.title,
-          description: this.description
+          description: this.description,
+          image: this.image
         }
         this.$store.dispatch('createNote', noteData)
         this.title = ''
-        this.description = ''
+        this.description = '',
+        this.image = ''
+      },
+      addImage () {
+        this.$refs.imageInput.click()
+      },
+      imagePicked (event) {
+        const file = event.target.files
+        let fileName = file[0].name
+
+        if(fileName.lastIndexOf('.') <= 0) {
+          return alert('Please add a valid file')
+        }
+        const fileReader = new FileReader()
+        fileReader.addEventListener('load', () => {
+          this.image = fileReader.result
+        })
+        fileReader.readAsDataURL(file[0])
+        this.image = file[0]
       }
     }
   }

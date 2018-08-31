@@ -41,7 +41,8 @@ export const store = new Vuex.Store({
           notes.push({
             id: key,
             title: obj[key].title,
-            description: obj[key].description
+            description: obj[key].description,
+            image: obj[key].image
           })
         }
         commit('setLoading', false)
@@ -55,7 +56,8 @@ export const store = new Vuex.Store({
       commit('setLoading', true)
       const note = {
         title: payload.title,
-        description: payload.description
+        description: payload.description,
+        image: payload.image
       }
       firebase.database().ref('notes').push(note).then((data) => {
         commit('setLoading', false)
@@ -96,7 +98,8 @@ export const store = new Vuex.Store({
           notes.push({
             id: key,
             title: obj[key].title,
-            description: obj[key].description
+            description: obj[key].description,
+            image: obj[key].image
           })
         }
         commit('setLoading', false)

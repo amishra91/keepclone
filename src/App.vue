@@ -42,13 +42,18 @@
 </script>
 
 <style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+  }
   #app {
     background: #f5f5f5;
   }
   #keep main .container {
     height: 660px;
   }
-
+  .note-desc {
+    font-size: 16px;
+  }
   .text {
     font-weight: 400;
   }
@@ -58,6 +63,11 @@
   .custom-loader {
     animation: loader 1s infinite;
     display: flex;
+  }
+  .resp-img {
+    display: block;
+    max-width: 100%;
+    height: auto;
   }
   @-moz-keyframes loader {
     from {
