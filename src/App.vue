@@ -22,6 +22,7 @@
     </v-toolbar>
 
     <router-view></router-view>
+    <site-footer></site-footer>
   </v-app>
 </template>
 

@@ -9,6 +9,7 @@ import { store } from './store'
 import 'vuetify/dist/vuetify.min.css'
 import EditNoteModal from './components/editNoteModal.vue'
 import DeleteNote from './components/deleteNote.vue'
+import Footer from './components/footer.vue'
 
 Vue.use(Vuetify)
 
@@ -16,6 +17,7 @@ Vue.config.productionTip = false
 
 Vue.component('edit-note', EditNoteModal)
 Vue.component('delete-note', DeleteNote)
+Vue.component('site-footer', Footer)
 
 /* eslint-disable */
 new Vue({
